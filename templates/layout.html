@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>test</title>
+    <link rel="icon" href="../../favicon.ico">
+    <link href="/static/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/non-responsive.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{ url_for('index') }}">test</a>
+        </div>
+        <div id="navbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ url_for('index') }}">主页</a></li>
+          </ul>
+          {% if not session.username %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('register') }}">注册</a></li>
+                <li><a href="{{ url_for('login') }}">登录</a></li>
+            </ul>
+          {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;{{ session.username }}
+                    </a>
+                </li>
+                <li><a href="{{ url_for('logout') }}">注销</a></li>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                        <li><script>$.scojs_message( '{{ message }}' )</script>  </li>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    {% block body %}
+    {% endblock %}
+
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </body>
+</html>
